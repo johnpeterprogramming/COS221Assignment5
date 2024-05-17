@@ -37,11 +37,20 @@ class Database {
     getActors(callback) {
         this.connection.query("SELECT * from actors", callback);
     }
-    getMovies(callback) {
-        this.connection.query("SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, m.Duration, g.Description as Genre from movies as m, catalog as c, genre as g where m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID", callback);
+    getMovies(CatalogID, callback) {
+        let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, m.Duration, g.Description as Genre from movies as m, catalog as c, genre as g where m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID";
+        if (CatalogID)
+            sql += " AND c.CatalogID = " + CatalogID;
+        this.connection.query(sql, callback);
     }
-    getShows(callback) {
-        this.connection.query("SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, s.Seasons, s.Episodes FROM shows as s, catalog as c WHERE s.CatalogID = c.CatalogID", callback);
+    updateCatalog(CatalogID, Title, Director, ReleaseDate, callback) {
+        this.connection.query("UPDATE catalog SET Title = ?, Director = ?, ReleaseDate = ? WHERE CatalogID = ?", [Title, Director, ReleaseDate, CatalogID], callback);
+    }
+    getShows(CatalogID, callback) {
+        let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, s.Seasons, s.Episodes FROM shows as s, catalog as c WHERE s.CatalogID = c.CatalogID";
+        if (CatalogID)
+            sql += " AND c.CatalogID = " + CatalogID;
+        this.connection.query(sql, callback);
     }
 }
 

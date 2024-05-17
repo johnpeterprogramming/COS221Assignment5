@@ -56,8 +56,31 @@ app.get('/', (req, res) => {
     res.render('index', {title: "Home"});
 });
 
+app.get('/movie/:id', (req, res) => {
+    db.getMovies(req.params.id, (err, movie) => {
+        if (err) {
+            res.status(500).send("An error occurred: " + err);
+        }
+        res.render('movie', {title: movie[0].Title, movie: movie[0]});
+    });  
+    
+});
+app.post('/catalog/update/:id', (req, res) => {
+    db.updateCatalog(req.params.id, req.body.Title, req.body.Director, req.body.ReleaseDate, (err, result) => {
+        if (err) {
+            res.status(500).send("An error occurred: " + err);
+        } else {
+            console.log("Successful Catalog update!");
+    
+            // Redirects to the previous page
+            res.redirect(req.headers.referer || '/');
+
+        }
+    });
+});
+
 app.get('/movies', (req, res) => {
-    db.getMovies((err, movies) => {
+    db.getMovies(null, (err, movies) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
         }
@@ -66,14 +89,22 @@ app.get('/movies', (req, res) => {
 })
 
 app.get('/shows', (req, res) => {
-    db.getShows((err, shows) => {
+    db.getShows(null, (err, shows) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
         }
-        console.log(shows.length);
         res.render('shows', {title: "Shows", shows: shows});
     });
 })
+app.get('/show/:id', (req, res) => {
+    db.getShows(req.params.id, (err, show) => {
+        if (err) {
+            res.status(500).send("An error occurred: " + err);
+        }
+        res.render('show', {title: show[0].Title, show: show[0]});
+    });  
+    
+});
 
 app.get('/account', (req, res) => {
     res.render('account', {title: "Account"});
