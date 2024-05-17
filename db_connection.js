@@ -43,20 +43,59 @@ class Database {
             sql += " AND c.CatalogID = " + CatalogID;
         this.connection.query(sql, callback);
     }
-    updateCatalog(CatalogID, Title, Director, ReleaseDate, callback) {
-        this.connection.query("UPDATE catalog SET Title = ?, Director = ?, ReleaseDate = ? WHERE CatalogID = ?", [Title, Director, ReleaseDate, CatalogID], callback);
-    }
     getShows(CatalogID, callback) {
         let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, s.Seasons, s.Episodes FROM shows as s, catalog as c WHERE s.CatalogID = c.CatalogID";
         if (CatalogID)
             sql += " AND c.CatalogID = " + CatalogID;
         this.connection.query(sql, callback);
     }
-    deleteMovie(CatalogID, callback) {
-        this.connection.query("DELETE FROM movies WHERE CatalogID = ?", [CatalogID], callback);
+
+    updateCatalog(CatalogID, Title, Director, ReleaseDate, callback) {
+        this.connection.query("UPDATE catalog SET Title = ?, Director = ?, ReleaseDate = ? WHERE CatalogID = ?", [Title, Director, ReleaseDate, CatalogID], callback);
     }
-    deleteShow(CatalogID, callback) {
-        this.connection.query("DELETE FROM shows WHERE CatalogID = ?", [CatalogID], callback);
+
+    deleteMovieOrShow(CatalogID, callback) {
+        this.connection.query("DELETE FROM catalog WHERE CatalogID = ?", [CatalogID], callback);
+    }
+
+    addCatalog(CatalogID, Title, Director, ReleaseDate, Genre, callback) {
+        // I am starting a transaction, because there are several queries that could have errors and if the entire process isn't successful, I want to rollback the entire transaction
+        this.connection.beginTransaction((transactionError) => {
+            if (transactionError) {
+                console.log("Error starting transaction");
+                callback(transactionError);
+            }
+            this.connection.query("INSERT INTO catalog (CatalogID, Title, Director, ReleaseDate) VALUES (?, ?, ?, ?)", [CatalogID, Title, Director, ReleaseDate], (err, res) => {
+                if (err) {
+                    this.connection.rollback();
+                    console.log("Error before adding genre");
+                    callback(err);
+                } else {
+                    // Add Genre
+                    this.connection.query("INSERT INTO genre (CatalogID, Description) VALUES (?, ?)", [CatalogID, Genre], (err, res) => {
+                        if (err) {
+                            this.connection.rollback();
+                            callback(err, null);
+                        } else {
+                            this.connection.commit((commitFail) => {
+                                if (commitFail) {
+                                    this.connection.rollback();
+                                    callback(commitFail);
+                                } else
+                                    callback(null, res);
+                            });
+                        }
+    
+                    });
+                }
+            });
+        });
+    }
+    addMovie(CatalogID, Duration, callback) {
+        this.connection.query("INSERT INTO movies (CatalogID, Duration) VALUES (?, ?)", [CatalogID, Duration], callback);
+    }
+    addShow(CatalogID, Seasons, Episodes, callback) {
+        this.connection.query("INSERT INTO shows (CatalogID, Seasons, Episodes) VALUES (?, ?, ?)", [CatalogID, Seasons, Episodes], callback);
     }
 }
 

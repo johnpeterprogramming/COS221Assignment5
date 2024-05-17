@@ -65,24 +65,48 @@ app.get('/movies', (req, res) => {
         res.render('movies', {title: "Movies", movies: movies});
     });
 })
+app.get('/movies/add', (req, res) => {
+    res.render('movie_add', {title: "Add Movie"});
+});
+app.post('/movies/add', (req, res) => {
+    db.addCatalog(req.body.CatalogID, req.body.Title, req.body.Director, req.body.ReleaseDate, req.body.Genre, (err, result) => {
+        if (err) {
+            console.dir(err);
+            res.status(500).send("An error occurred with Catalog: " + err);
+        } else {
+            console.log("Successful Catalog and Genre Add!");
+            db.addMovie(req.body.CatalogID, req.body.Duration, (err, result) => {
+                if (err) {
+                    res.status(500).send("An error occurred with Movie: " + err);
+                } else {
+                    console.log("Successful Movie Add! - DONE");
+                    // Redirects to the previous page
+                    res.redirect('/movie/' + req.body.CatalogID);
+                }
+            });
+        }
+    });
+});
 app.get('/movie/:id', (req, res) => {
     db.getMovies(req.params.id, (err, movie) => {
-        if (err) {
+        if (err || movie.length == 0) {
             res.status(500).send("An error occurred: " + err);
+        } else {
+            res.render('movie', {title: movie[0].Title, movie: movie[0]});
         }
-        res.render('movie', {title: movie[0].Title, movie: movie[0]});
     });  
     
 });
 app.post('/movie/delete/:id', (req, res) => {
-    db.deleteMovie(req.params.id, (err, result) => {
+    db.deleteMovieOrShow(req.params.id, (err, result) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
+        } else {
+            console.log("Successful Movie delete!");
+        
+            // Redirects to the previous page
+            res.redirect('/movies');
         }
-        console.log("Successful Movie delete!");
-    
-        // Redirects to the previous page
-        res.redirect('/movies');
     });
 });
 
@@ -118,23 +142,20 @@ app.get('/show/:id', (req, res) => {
     
 });
 app.post('/show/delete/:id', (req, res) => {
-    db.deleteShow(req.params.id, (err, result) => {
+    db.deleteMovieOrShow1(req.params.id, (err, result) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
+        } else {
+            console.log("Successful Show delete!");
+        
+            // Redirects to the previous page
+            res.redirect('/shows');
         }
-        console.log("Successful Show delete!");
-    
-        // Redirects to the previous page
-        res.redirect('/shows');
     });
 });
 
 
-
-
-
-
-
+// Account and User management
 app.get('/account', (req, res) => {
     res.render('account', {title: "Account"});
 });
@@ -153,7 +174,7 @@ app.post('/account', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login', {title: "Login"});
 });
-app.post('/login', (req, res) => {
+app.post('/login', (req, res, next) => {
     db.verifyUser(req.body.email, req.body.password, (err, user) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
@@ -164,17 +185,18 @@ app.post('/login', (req, res) => {
             // CODE HERE GETS EXECUTES WHEN USER HAS SUCCESSFULLY LOGGED IN
             req.session.user = user[0]; // db always returns an array, so index 0 is used to find user
             req.session.save();
+
             res.redirect('/account');
         }
     });
 });
-
 app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
 });
 
 
+// app is serves locally on port 3000
 app.listen(3000, () => {
   console.log(`App listening http://localhost:3000`)
 })
