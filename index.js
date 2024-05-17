@@ -132,6 +132,28 @@ app.get('/shows', (req, res) => {
         res.render('shows', {title: "Shows", shows: shows});
     });
 })
+app.get('/shows/add', (req, res) => {
+    res.render('show_add', {title: "Add Show"});
+});
+app.post('/shows/add', (req, res) => {
+    db.addCatalog(req.body.CatalogID, req.body.Title, req.body.Director, req.body.ReleaseDate, req.body.Genre, (err, result) => {
+        if (err) {
+            console.dir(err);
+            res.status(500).send("An error occurred with Catalog: " + err);
+        } else {
+            console.log("Successful Catalog and Genre Add!");
+            db.addShow(req.body.CatalogID, req.body.Seasons, req.body.Episodes, (err, result) => {
+                if (err) {
+                    res.status(500).send("An error occurred with Show: " + err);
+                } else {
+                    console.log("Successful Show Add! - DONE");
+                    // Redirects to the previous page
+                    res.redirect('/show/' + req.body.CatalogID);
+                }
+            });
+        }
+    });
+});
 app.get('/show/:id', (req, res) => {
     db.getShows(req.params.id, (err, show) => {
         if (err) {
@@ -142,7 +164,7 @@ app.get('/show/:id', (req, res) => {
     
 });
 app.post('/show/delete/:id', (req, res) => {
-    db.deleteMovieOrShow1(req.params.id, (err, result) => {
+    db.deleteMovieOrShow(req.params.id, (err, result) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
         } else {

@@ -1,0 +1,27 @@
+<h1>Add New Show</h1>
+
+<form action="/shows/add" method="post">
+    <label for="">Catalog ID:</label>
+    <input type="number" name="CatalogID" id="CatalogID" value="12345678">
+
+    <label for="">Title:</label>
+    <input type="text" name="Title" id="Title" value="Test Title">
+    
+    <label for="">Director:</label>
+    <input type="text" name="Director" id="Director" value="Test Director">
+
+    <label for="">ReleaseDate:</label>
+    <input type="year" name="ReleaseDate" id="ReleaseDate" value="2024">
+
+    <label for="">Genre:</label>
+    <input type="text" name="Genre" id="Genre" value="test,genre">
+
+    <!-- Show Specific -->
+    <label for="">Seasons:</label>
+    <input type="text" name="Seasons" id="Seasons" value="8">
+    
+    <label for="">Episodes:</label>
+    <input type="text" name="Episodes" id="Episoes" value="2">
+    
+    <input type="submit" value="Add new Movie">
+</form>
