@@ -56,6 +56,15 @@ app.get('/', (req, res) => {
     res.render('index', {title: "Home"});
 });
 
+// MOVIE ROUTES
+app.get('/movies', (req, res) => {
+    db.getMovies(null, (err, movies) => {
+        if (err) {
+            res.status(500).send("An error occurred: " + err);
+        }
+        res.render('movies', {title: "Movies", movies: movies});
+    });
+})
 app.get('/movie/:id', (req, res) => {
     db.getMovies(req.params.id, (err, movie) => {
         if (err) {
@@ -65,29 +74,32 @@ app.get('/movie/:id', (req, res) => {
     });  
     
 });
+app.post('/movie/delete/:id', (req, res) => {
+    db.deleteMovie(req.params.id, (err, result) => {
+        if (err) {
+            res.status(500).send("An error occurred: " + err);
+        }
+        console.log("Successful Movie delete!");
+    
+        // Redirects to the previous page
+        res.redirect('/movies');
+    });
+});
+
 app.post('/catalog/update/:id', (req, res) => {
     db.updateCatalog(req.params.id, req.body.Title, req.body.Director, req.body.ReleaseDate, (err, result) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
         } else {
             console.log("Successful Catalog update!");
-    
-            // Redirects to the previous page
-            res.redirect(req.headers.referer || '/');
-
         }
+    
+        // Redirects to the previous page
+        res.redirect(req.headers.referer || '/');
     });
 });
 
-app.get('/movies', (req, res) => {
-    db.getMovies(null, (err, movies) => {
-        if (err) {
-            res.status(500).send("An error occurred: " + err);
-        }
-        res.render('movies', {title: "Movies", movies: movies});
-    });
-})
-
+// SHOW ROUTES
 app.get('/shows', (req, res) => {
     db.getShows(null, (err, shows) => {
         if (err) {
@@ -105,6 +117,23 @@ app.get('/show/:id', (req, res) => {
     });  
     
 });
+app.post('/show/delete/:id', (req, res) => {
+    db.deleteShow(req.params.id, (err, result) => {
+        if (err) {
+            res.status(500).send("An error occurred: " + err);
+        }
+        console.log("Successful Show delete!");
+    
+        // Redirects to the previous page
+        res.redirect('/shows');
+    });
+});
+
+
+
+
+
+
 
 app.get('/account', (req, res) => {
     res.render('account', {title: "Account"});

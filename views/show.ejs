@@ -19,6 +19,9 @@
     
     <input type="submit" value="Update Details">
 </form>
+<form action="/show/delete/<%= show.CatalogID %>" method="post">
+    <input style="background-color:red;" type="submit" value="DELETE">
+</form>
 
 <script>
     let release_date = "<%= show.ReleaseDate %>";

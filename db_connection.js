@@ -32,7 +32,7 @@ class Database {
         this.connection.query("SELECT a.AccountHolder, a.AccountNumber, a.CVV, a.SubscriptionType, a.SubscriptionStartDate, a.SubscriptionEndDate, u.UserID, u.Email FROM accounts AS a, user AS u WHERE a.UserID = u.UserID AND u.Email = '" + email + "' AND u.Password = '" + password + "'", callback);
     }
     updateUser(userid, email, password, callback) {
-        this.connection.query("UPDATE user SET Email = '" + email + "', Password = '" + password + "' WHERE UserID = " + userid, callback);
+        this.connection.query("UPDATE user SET Email = ?, Password = ? WHERE UserID = ?", [email, password, userid], callback);
     }
     getActors(callback) {
         this.connection.query("SELECT * from actors", callback);
@@ -51,6 +51,12 @@ class Database {
         if (CatalogID)
             sql += " AND c.CatalogID = " + CatalogID;
         this.connection.query(sql, callback);
+    }
+    deleteMovie(CatalogID, callback) {
+        this.connection.query("DELETE FROM movies WHERE CatalogID = ?", [CatalogID], callback);
+    }
+    deleteShow(CatalogID, callback) {
+        this.connection.query("DELETE FROM shows WHERE CatalogID = ?", [CatalogID], callback);
     }
 }
 
