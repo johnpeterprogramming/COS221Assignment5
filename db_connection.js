@@ -29,7 +29,10 @@ class Database {
 
     // Returns account information if email and password match
     verifyUser(email, password, callback) {
-        this.connection.query("SELECT a.AccountHolder, a.AccountNumber, a.CVV, a.SubscriptionType, a.SubscriptionStartDate, a.SubscriptionEndDate from accounts as a, user as u where u.Email = '" + email + "' AND u.Password = '" + password + "'", callback);
+        this.connection.query("SELECT a.AccountHolder, a.AccountNumber, a.CVV, a.SubscriptionType, a.SubscriptionStartDate, a.SubscriptionEndDate, u.UserID, u.Email FROM accounts AS a, user AS u WHERE a.UserID = u.UserID AND u.Email = '" + email + "' AND u.Password = '" + password + "'", callback);
+    }
+    updateUser(userid, email, password, callback) {
+        this.connection.query("UPDATE user SET Email = '" + email + "', Password = '" + password + "' WHERE UserID = " + userid, callback);
     }
     getActors(callback) {
         this.connection.query("SELECT * from actors", callback);
@@ -38,7 +41,7 @@ class Database {
         this.connection.query("SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, m.Duration, g.Description as Genre from movies as m, catalog as c, genre as g where m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID", callback);
     }
     getShows(callback) {
-        this.connection.query("SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, s.Seasons, s.Episodes FROM shows as s, catalog as c where s.CatalogID = c.CatalogID", callback);
+        this.connection.query("SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, s.Seasons, s.Episodes FROM shows as s, catalog as c WHERE s.CatalogID = c.CatalogID", callback);
     }
 }
 

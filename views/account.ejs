@@ -1,0 +1,16 @@
+<h1>User account Details</h1>
+<p><%= user.AccountHolder %></p>
+<p><%= user.AccountID %></p>
+<p><%= user.AccountNumber %></p>
+<p><%= user.CVV %></p>
+<p><%= user.SubscriptionType %></p>
+<p><%= user.SubscriptionStartDate %></p>
+<p><%= user.SubscriptionEndDate %></p>
+
+<form action="" method="post">
+    <h2>Update user info</h2>
+    <input type="email" name="email" id="email" value="<%= user.Email %>">
+    <input type="password" name="password" id="password" value="<%= user.Password %>">
+
+    <input type="submit" value="Update Details">
+</form>
