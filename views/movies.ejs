@@ -1,0 +1,10 @@
+<% movies.forEach(movie => { %>
+    <article>
+        <h2><%= movie.Title %></h2>
+        <p>Director: <%= movie.Director %></p>
+        <p>Release Date: <%= movie.ReleaseDate %></p>
+        <p>Duration: <%= movie.Duration %></p>
+        <p>Genres: <%= movie.Genre %></p> 
+        <br><br>
+    </article>
+<% }) %>

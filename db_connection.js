@@ -1,0 +1,48 @@
+const mysql = require('mysql')
+
+class Database {
+    constructor() {
+        this.connection = mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            database: process.env.DB_DATABASE,
+            port: process.env.DB_PORT
+        })
+        
+        this.connection.connect(err => {
+            if (err) throw err
+            console.log('Database connected.')
+        })
+    }
+
+    // Ends db connection when server is shutdown with Ctl+C
+    destroy() {
+        this.connection.end(err => {
+            if (err) throw err
+            console.log('Database connection closed.')
+        })
+    }
+
+    // TODO
+        // 1. Add ability to count views for a movie/show using user_views table
+
+    // Returns account information if email and password match
+    verifyUser(email, password, callback) {
+        this.connection.query("SELECT a.AccountHolder, a.AccountNumber, a.CVV, a.SubscriptionType, a.SubscriptionStartDate, a.SubscriptionEndDate from accounts as a, user as u where u.Email = '" + email + "' AND u.Password = '" + password + "'", callback);
+    }
+    getActors(callback) {
+        this.connection.query("SELECT * from actors", callback);
+    }
+    getMovies(callback) {
+        this.connection.query("SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, m.Duration, g.Description as Genre from movies as m, catalog as c, genre as g where m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID", callback);
+    }
+    getShows(callback) {
+        this.connection.query("SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, s.Seasons, s.Episodes FROM shows as s, catalog as c where s.CatalogID = c.CatalogID", callback);
+    }
+}
+
+
+
+
+module.exports = new Database()
