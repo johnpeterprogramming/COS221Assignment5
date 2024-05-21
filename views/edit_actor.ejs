@@ -1,0 +1,29 @@
+<!-- <h1>Edit Actor</h1>
+<form action="/actors/edit/<%= actor.ActorID %>" method="post">
+    <label for="FName">First Name:</label>
+    <input type="text" id="FName" name="FName" value="<%= actor.FName %>" required>
+    <br>
+    <label for="LName">Last Name:</label>
+    <input type="text" id="LName" name="LName" value="<%= actor.LName %>" required>
+    <br>
+    <label for="CatalogID">Catalog ID:</label>
+    <input type="number" id="CatalogID" name="CatalogID" value="<%= actor.CatalogID %>" required>
+    <br>
+    <button type="submit">Update Actor</button>
+</form>
+<a href="/actors">Back to Actors</a> -->
+
+<h1>Edit Actor</h1>
+<form action="/actors/edit/<%= actor.ActorID %>" method="post">
+    <label for="FName">First Name:</label>
+    <input type="text" id="FName" name="FName" value="<%= actor.FName %>">
+
+    <label for="LName">Last Name:</label>
+    <input type="text" id="LName" name="LName" value="<%= actor.LName %>">
+
+    <label for="CatalogID">Catalog ID:</label>
+    <input type="text" id="CatalogID" name="CatalogID" value="<%= actor.CatalogID %>">
+
+    <button type="submit">Save Changes</button>
+</form>
+<a href="/actors">Cancel</a>

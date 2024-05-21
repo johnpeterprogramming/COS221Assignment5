@@ -34,9 +34,90 @@ class Database {
     updateUser(userid, email, password, callback) {
         this.connection.query("UPDATE user SET Email = ?, Password = ? WHERE UserID = ?", [email, password, userid], callback);
     }
-    getActors(callback) {
-        this.connection.query("SELECT * from actors", callback);
+    getActors(searchParam, callback) {
+        //this.connection.query("SELECT * from actors", callback);
+        
+        let sql = "SELECT * FROM actors ";
+        
+        if (searchParam.FName) {
+            sql += " WHERE FName LIKE '%" + searchParam.FName + "%'";
+            
+        }
+
+        sql += " LIMIT 150";
+        this.connection.query(sql, callback);
     }
+
+    ///******************
+    getActorById(actorId, callback) {
+        this.connection.query("SELECT * FROM actors WHERE ActorID = ?", [actorId], (err, results) => {
+            if (err) {
+                return callback(err);
+            }
+            callback(null, results[0]);
+        });
+    }
+    addActor(actor, callback) {
+        const sql = "INSERT INTO actors (FName, LName, CatalogID) VALUES (?, ?, ?)";
+        this.connection.query(sql, [actor.FName, actor.LName, actor.CatalogID], callback);
+    }
+    
+    updateActor(actorId, actorData, callback) {
+        const { FName, LName, CatalogID } = actorData;
+        this.connection.query("UPDATE actors SET FName = ?, LName = ?, CatalogID = ? WHERE ActorID = ?", [FName, LName, CatalogID, actorId], callback);
+    }
+    
+    deleteActor(actorId, callback) {
+        this.connection.query("DELETE FROM actors WHERE ActorID = ?", [actorId], callback);
+    }
+    ///******************
+
+    //GENRES
+    // Get all genres
+    getGenres(searchParam, callback) {
+        //this.connection.query("SELECT * FROM genre", callback);
+        let sql = "SELECT * FROM genre";
+
+        if(searchParam.GenreID){
+            sql += " WHERE GenreID = " + searchParam.GenreID;
+        }
+        if(searchParam.Description){
+            sql += " WHERE Description LIKE '%" + searchParam.Description + "%'";
+        }
+
+        sql += " LIMIT 200";
+        this.connection.query(sql, callback);
+
+    }
+
+    // Get genre by ID
+    getGenreById(genreId, callback) {
+        this.connection.query("SELECT * FROM genre WHERE GenreID = ?", [genreId], (err, results) => {
+            if (err) {
+                return callback(err);
+            }
+            callback(null, results[0]);
+        });
+    }
+
+    // Add a new genre
+    addGenre(genreData, callback) {
+        const { Description, CatalogID } = genreData;
+        this.connection.query("INSERT INTO genre (Description, CatalogID) VALUES (?, ?)", [Description, CatalogID], callback);
+    }
+
+    // Update a genre
+    updateGenre(genreId, genreData, callback) {
+        const { Description, CatalogID } = genreData;
+        this.connection.query("UPDATE genre SET Description = ?, CatalogID = ? WHERE GenreID = ?", [Description, CatalogID, genreId], callback);
+    }
+
+    // Delete a genre
+    deleteGenre(genreId, callback) {
+        this.connection.query("DELETE FROM genre WHERE GenreID = ?", [genreId], callback);
+    }
+
+
     //getMovies(CatalogID, callback)
     getMovies(filters, callback) {
         // let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, m.Duration, g.Description as Genre from movies as m, catalog as c, genre as g where m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID";
@@ -50,7 +131,7 @@ class Database {
             sql += " AND c.Director LIKE '%" + filters.director + "%'";
         }
         if (filters.genre) {
-            sql += " AND g.Description = '" + filters.genre + "'";
+            sql += " AND g.Description  LIKE '%" + filters.genre + "%'";
         }
         // if (filters.duration) {
         //     sql += " AND m.Duration = '" + filters.duration + "'";

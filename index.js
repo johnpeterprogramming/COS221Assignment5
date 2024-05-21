@@ -250,6 +250,149 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+//ADD FOR MANAGING OF ACTORS
+app.get('/actors', (req, res) => {
+
+    const {FName} = req.query;
+
+    db.getActors({FName}, (err, actors) => {
+        if (err) {
+            res.status(500).send("An error occurred: " + err);
+        }
+        res.render('actors', {title: "Actors", actors: actors});
+    }
+    );
+});
+
+
+// Route to display form for adding a new actor
+app.get('/actors/add', (req, res) => {
+    res.render('add_actor', { title: "Add Actor" });
+});
+
+// Route to handle adding a new actor
+app.post('/actors/add', (req, res) => {
+    const { FName, LName, CatalogID } = req.body;
+    db.addActor({ FName, LName, CatalogID }, (err, result) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        res.redirect('/actors');
+    });
+});
+
+// EDIT AN ACTOR
+app.get('/actors/edit/:id', (req, res) => {
+    const actorId = req.params.id;
+    db.getActorById(actorId, (err, actor) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        if (!actor) {
+            return res.status(404).send("Actor not found");
+        }
+        res.render('edit_actor', {title: "Edit Actor", actor: actor});
+    });
+});
+
+// EDIT AN ACTOR POST
+app.post('/actors/edit/:id', (req, res) => {
+    const actorId = req.params.id;
+    const updatedActor = {
+        FName: req.body.FName,
+        LName: req.body.LName,
+        CatalogID: req.body.CatalogID
+    };
+    db.updateActor(actorId, updatedActor, (err) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        res.redirect('/actors');
+    });
+});
+
+// DELETE AN ACTOR
+app.post('/actors/delete/:id', (req, res) => {
+    const ActorID = req.params.id;
+    db.deleteActor(ActorID, (err, result) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        res.redirect('/actors');
+    });
+});
+
+//GENRES AND MANAGING OF GENRES
+app.get('/genres', (req, res) => {
+
+    const {GenreID, Description} = req.query;
+
+    db.getGenres({GenreID, Description}, (err, genres) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        res.render('genres', {title: "Genres", genres: genres});
+    });
+});
+
+// Display the add genre form
+app.get('/genres/add', (req, res) => {
+    res.render('add_genre', { title: "Add Genre" });
+});
+
+// Handle the add genre form submission
+app.post('/genres/add', (req, res) => {
+    const newGenre = {
+        Description: req.body.Description,
+        CatalogID: req.body.CatalogID
+    };
+    db.addGenre(newGenre, (err) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        res.redirect('/genres');
+    });
+});
+
+// Display the edit genre form
+app.get('/genres/edit/:id', (req, res) => {
+    const genreId = req.params.id;
+    db.getGenreById(genreId, (err, genre) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        if (!genre) {
+            return res.status(404).send("Genre not found");
+        }
+        res.render('edit_genre', { title: "Edit Genre", genre: genre });
+    });
+});
+
+// Handle the edit genre form submission
+app.post('/genres/edit/:id', (req, res) => {
+    const genreId = req.params.id;
+    const updatedGenre = {
+        Description: req.body.Description,
+        CatalogID: req.body.CatalogID
+    };
+    db.updateGenre(genreId, updatedGenre, (err) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        res.redirect('/genres');
+    });
+});
+
+// Handle genre deletion
+app.post('/genres/delete/:id', (req, res) => {
+    const genreId = req.params.id;
+    db.deleteGenre(genreId, (err) => {
+        if (err) {
+            return res.status(500).send("An error occurred: " + err);
+        }
+        res.redirect('/genres');
+    });
+});
 
 // app is serves locally on port 3000
 app.listen(3000, () => {

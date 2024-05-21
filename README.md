@@ -16,6 +16,13 @@ FOR CORNE:
 6) Add filtering
 7) Be able to manage actors, directors and genres
 
+**CORNE ADDED**
+Did step 2 of Steps for setup
+Added filtering for Movies and shows
+Added Management for Actors and Genres, can (Add, Edit and Delete)
+Actors can Search by First Name
+Genres can Search by Genre Id and Description
+
 
 
 
