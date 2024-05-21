@@ -1,0 +1,11 @@
+<h1>Edit Genre</h1>
+<form action="/genres/edit/<%= genre.GenreID %>" method="post">
+    <label for="Description">Description:</label>
+    <input type="text" id="Description" name="Description" value="<%= genre.Description %>" required>
+    
+    <label for="CatalogID">Catalog ID:</label>
+    <input type="number" id="CatalogID" name="CatalogID" value="<%= genre.CatalogID %>" required>
+
+    <button type="submit">Update Genre</button>
+</form>
+<a href="/genres">Back to Genres</a>

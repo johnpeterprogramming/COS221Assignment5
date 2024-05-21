@@ -1,0 +1,25 @@
+<h1>Genres</h1>
+<a href="/genres/add">Add New Genre</a>
+
+<form action="/genres" method="GET">
+    <label for="GenreID">Search by Genre ID:</label>
+    <input type="search" id="GenreID" name="GenreID">
+
+    <label for="Description">Search by Description:</label>
+    <input type="search" id="Description" name="Description">
+    
+    <button type="submit">Seacrh</button>
+</form>
+
+<% genres.forEach(genre => { %>
+    <article>
+        <h3>Genre ID: <%= genre.GenreID %></h3>
+        <p>Description: <%= genre.Description %></p>
+        <p>Catalog ID: <%= genre.CatalogID %></p>
+        <a href="/genres/edit/<%= genre.GenreID %>">Edit</a>
+        <form action="/genres/delete/<%= genre.GenreID %>" method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+        <br/>
+    </article>
+<% }) %>

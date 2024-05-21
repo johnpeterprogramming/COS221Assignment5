@@ -1,0 +1,23 @@
+
+<h1>Actors</h1>
+<a href="/actors/add">Add New Actor</a>
+
+<form action="/actors" method="GET">
+    <label for="FName">Search by First Name:</label>
+    <input type="search" id="FName" name="FName">
+    <button type="submit">Search</button> 
+</form>
+
+<% actors.forEach(actor => { %>
+    <article>
+        <h3>Actor ID: <%= actor.ActorID %></h3>
+        <p>First Name: <%= actor.FName %></p>
+        <p>Last Name: <%= actor.LName %></p>
+        <p>Catalog ID: <%= actor.CatalogID %></p>
+        <a href="/actors/edit/<%= actor.ActorID %>">Edit</a>
+        <form action="/actors/delete/<%= actor.ActorID %>" method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+        <br/>
+    </article>
+<% }) %>
