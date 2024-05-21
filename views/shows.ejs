@@ -1,0 +1,30 @@
+<!-- FOR FILTERING -->
+<h2>Filters:</h2>
+<form action="/shows" method="GET">
+
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title">
+
+    <label for="director">Director:</label>
+    <input type="text" id="director" name="director">
+    
+    <label for="seasons">Seasons:</label>
+    <input type="text" id="seasons" name="seasons">
+
+    <label for="releaseDate">Release Date (Year):</label>
+    <input type="number" id="releaseDate" name="releaseDate">
+    
+    <button type="submit">Apply Filters</button>
+</form>
+
+<% shows.forEach(show => { %>
+    <article>
+        <h2><%= show.Title %></h2>
+        <p>Director: <%= show.Director %></p>
+        <p>Release Date: <%= show.ReleaseDate %></p>
+        <p>Seasons: <%= show.Seasons %></p>
+        <p>Episodes: <%= show.Episodes %></p>
+        <a href="/show/<%= show.CatalogID %>">View/Manage</a>
+        <br><br>
+    </article>
+<% }) %>

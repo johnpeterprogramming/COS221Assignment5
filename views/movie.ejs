@@ -1,0 +1,32 @@
+<h1>Manage Movie</h1>
+
+<form action="/catalog/update/<%= movie.CatalogID %>" method="post">
+    <label for="">Title:</label>
+    <input type="text" name="Title" id="Title" value="<%= movie.Title %>">
+    
+    <label for="">Director:</label>
+    <input type="text" name="Director" id="Director" value="<%= movie.Director %>">
+
+    <label for="">ReleaseDate:</label>
+    <input type="year" name="ReleaseDate" id="ReleaseDate">
+
+    <!-- GENRE CAN'T BE UPDATED YET -->
+    <label for="">Genre:</label>
+    <input type="text" name="Genre" id="Genre" value="<%= movie.Genre %>">
+
+    <label for="">Duration:</label>
+    <input type="text" name="Duration" id="Duration" value="<%= movie.Duration %>">
+    
+    <input type="submit" value="Update Details">
+</form>
+<form action="/movie/delete/<%= movie.CatalogID %>" method="post">
+    <input style="background-color:red;" type="submit" value="DELETE">
+</form>
+
+<script>
+    let release_date = "<%= movie.ReleaseDate %>";
+
+    // Convert string to date
+    let date = new Date(release_date);
+    document.getElementById("ReleaseDate").value = date.getFullYear();
+</script>

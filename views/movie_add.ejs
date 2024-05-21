@@ -1,0 +1,24 @@
+<h1>Add New Movie</h1>
+
+<form action="/movies/add" method="post">
+    <label for="">Catalog ID:</label>
+    <input type="number" name="CatalogID" id="CatalogID" value="12345678">
+
+    <label for="">Title:</label>
+    <input type="text" name="Title" id="Title" value="Test Title">
+    
+    <label for="">Director:</label>
+    <input type="text" name="Director" id="Director" value="Test Director">
+
+    <label for="">ReleaseDate:</label>
+    <input type="year" name="ReleaseDate" id="ReleaseDate" value="2024">
+
+    <label for="">Genre:</label>
+    <input type="text" name="Genre" id="Genre" value="test,genre">
+
+    <!-- Movie Specific -->
+    <label for="">Duration:</label>
+    <input type="text" name="Duration" id="Duration" value="01:30:00">
+    
+    <input type="submit" value="Add new Movie">
+</form>

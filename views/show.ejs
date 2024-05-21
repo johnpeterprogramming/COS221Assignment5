@@ -1,0 +1,32 @@
+<h1>Manage Show</h1>
+
+<form action="/catalog/update/<%= show.CatalogID %>" method="post">
+    <label for="">Title:</label>
+    <input type="text" name="Title" id="Title" value="<%= show.Title %>">
+    
+    <label for="">Director:</label>
+    <input type="text" name="Director" id="Director" value="<%= show.Director %>">
+
+    <label for="">ReleaseDate:</label>
+    <input type="year" name="ReleaseDate" id="ReleaseDate">
+
+    <!-- NUM SEASONS AND EPISODES CANT' BE UPDATED YET --> 
+    <label for="">Seasons:</label>
+    <input type="text" name="Seasons" id="Seasons" value="<%= show.Seasons %>">
+
+    <label for="">Episodes:</label>
+    <input type="text" name="Episodes" id="Episodes" value="<%= show.Episodes %>">
+    
+    <input type="submit" value="Update Details">
+</form>
+<form action="/show/delete/<%= show.CatalogID %>" method="post">
+    <input style="background-color:red;" type="submit" value="DELETE">
+</form>
+
+<script>
+    let release_date = "<%= show.ReleaseDate %>";
+
+    // Convert string to date
+    let date = new Date(release_date);
+    document.getElementById("ReleaseDate").value = date.getFullYear();
+</script>
