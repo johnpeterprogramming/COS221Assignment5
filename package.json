@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/johnpeterprogramming/COS221Assignment5#readme",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-ejs-layouts": "^2.5.1",
