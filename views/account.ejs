@@ -1,16 +1,36 @@
-<h1>User account Details</h1>
-<p><%= user.AccountHolder %></p>
-<p><%= user.AccountID %></p>
-<p><%= user.AccountNumber %></p>
-<p><%= user.CVV %></p>
-<p><%= user.SubscriptionType %></p>
-<p><%= user.SubscriptionStartDate %></p>
-<p><%= user.SubscriptionEndDate %></p>
 
-<form action="" method="post">
-    <h2>Update user info</h2>
-    <input type="email" name="email" id="email" value="<%= user.Email %>">
-    <input type="password" name="password" id="password" value="<%= user.Password %>">
+<div class="container py-4">
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
 
-    <input type="submit" value="Update Details">
-</form>
+        <h1>User account Details</h1>
+
+        <label>Account Holder: </label>
+        <p class="fw-bold"><%= user.AccountHolder %></p>
+        <label>Account ID: </label>
+        <p class="fw-bold"><%= user.AccountID %></p>
+        <label>Account Number: </label>
+        <p class="fw-bold"><%= user.AccountNumber %></p>
+        <label>Account CVV: </label>
+        <p class="fw-bold"><%= user.CVV %></p>
+        <label>Account Subscription Type: </label>
+        <p class="fw-bold"><%= user.SubscriptionType %></p>
+        <label>Account Start Date: </label>
+        <p class="fw-bold"><%= user.SubscriptionStartDate %></p>
+        <label>Account End Date: </label>
+        <p class="fw-bold"><%= user.SubscriptionEndDate %></p>
+
+
+        <form action="" method="post" class="mt-5">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" value="<%= user.Email %>">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="<%= user.Password %>">
+            </div>
+            <button type="submit" class="btn btn-primary my-2">Update Details</button>
+        </form>
+
+    </div>
+</div>

@@ -1,23 +1,31 @@
 
-<h1>Actors</h1>
-<a href="/actors/add">Add New Actor</a>
+<div class="px-5">
+    <h1>Actors</h1>
+    <a href="/actors/add"><button class="btn btn-secondary">Add New Actor</button></a>
 
-<form action="/actors" method="GET">
-    <label for="FName">Search by First Name:</label>
-    <input type="search" id="FName" name="FName">
-    <button type="submit">Search</button> 
-</form>
+    <form action="/actors" method="GET">
+        <label for="FName">Search by First Name:</label>
+        <input type="search" id="FName" name="FName">
+        <button type="submit">Search</button> 
+    </form>
 
-<% actors.forEach(actor => { %>
-    <article>
-        <h3>Actor ID: <%= actor.ActorID %></h3>
-        <p>First Name: <%= actor.FName %></p>
-        <p>Last Name: <%= actor.LName %></p>
-        <p>Catalog ID: <%= actor.CatalogID %></p>
-        <a href="/actors/edit/<%= actor.ActorID %>">Edit</a>
-        <form action="/actors/delete/<%= actor.ActorID %>" method="post" style="display:inline;">
-            <button type="submit">Delete</button>
-        </form>
-        <br/>
-    </article>
-<% }) %>
+</div>
+
+
+<section class="row g-3">
+
+    <% actors.forEach(actor => { %>
+        <article class="p-5 col-md-4">
+            <div class="bg-body-tertiary rounded p-3">
+                <h3>Actor ID: <%= actor.ActorID %></h3>
+                <p>First Name: <%= actor.FName %></p>
+                <p>Last Name: <%= actor.LName %></p>
+                <p>Catalog ID: <%= actor.CatalogID %></p>
+                <a href="/actors/edit/<%= actor.ActorID %>"><button class="btn btn-primary">Edit</button></a>
+                <form action="/actors/delete/<%= actor.ActorID %>" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </article>
+    <% }) %>
+</section>

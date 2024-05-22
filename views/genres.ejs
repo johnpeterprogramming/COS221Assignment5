@@ -1,25 +1,32 @@
-<h1>Genres</h1>
-<a href="/genres/add">Add New Genre</a>
+<div class="px-5">
+    <h1>Genres</h1>
+    <a href="/genres/add"><button class="btn btn-secondary">Add New Genre</button></a>
 
-<form action="/genres" method="GET">
-    <label for="GenreID">Search by Genre ID:</label>
-    <input type="search" id="GenreID" name="GenreID">
+    <form action="/genres" method="GET">
+        <label for="GenreID">Search by Genre ID:</label>
+        <input type="search" id="GenreID" name="GenreID">
 
-    <label for="Description">Search by Description:</label>
-    <input type="search" id="Description" name="Description">
-    
-    <button type="submit">Seacrh</button>
-</form>
+        <label for="Description">Search by Description:</label>
+        <input type="search" id="Description" name="Description">
+        
+        <button type="submit">Search</button>
+    </form>
 
-<% genres.forEach(genre => { %>
-    <article>
-        <h3>Genre ID: <%= genre.GenreID %></h3>
-        <p>Description: <%= genre.Description %></p>
-        <p>Catalog ID: <%= genre.CatalogID %></p>
-        <a href="/genres/edit/<%= genre.GenreID %>">Edit</a>
-        <form action="/genres/delete/<%= genre.GenreID %>" method="post" style="display:inline;">
-            <button type="submit">Delete</button>
-        </form>
-        <br/>
-    </article>
-<% }) %>
+</div>
+
+<section class="row g-3">
+
+    <% genres.forEach(genre => { %>
+        <article class="p-5 col-md-4">
+            <div class="bg-body-tertiary rounded p-3">
+                <h3>Genre ID: <%= genre.GenreID %></h3>
+                <p>Description: <%= genre.Description %></p>
+                <p>Catalog ID: <%= genre.CatalogID %></p>
+                <a href="/genres/edit/<%= genre.GenreID %>"><button class="btn btn-primary">Edit</button></a>
+                <form action="/genres/delete/<%= genre.GenreID %>" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </article>
+    <% }) %>
+</section>

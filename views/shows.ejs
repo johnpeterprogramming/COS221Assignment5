@@ -1,30 +1,36 @@
 <!-- FOR FILTERING -->
-<h2>Filters:</h2>
-<form action="/shows" method="GET">
+<form action="/shows" method="GET" class="px-5">
+    <h2>Filters:</h2>
+    <br>
 
     <label for="title">Title:</label>
-    <input type="text" id="title" name="title">
+    <input type="text" id="title" name="title" class="mx-1">
 
     <label for="director">Director:</label>
-    <input type="text" id="director" name="director">
-    
+    <input type="text" id="director" name="director" class="mx-1">
+
     <label for="seasons">Seasons:</label>
     <input type="text" id="seasons" name="seasons">
-
-    <label for="releaseDate">Release Date (Year):</label>
-    <input type="number" id="releaseDate" name="releaseDate">
     
-    <button type="submit">Apply Filters</button>
+   <label for="releaseDate">Release Date (Year):</label>
+    <input type="number" id="releaseDate" name="releaseDate" class="mx-1">
+    
+    <button type="submit" class="btn btn-secondary">Apply Filters</button>
 </form>
-
-<% shows.forEach(show => { %>
-    <article>
-        <h2><%= show.Title %></h2>
-        <p>Director: <%= show.Director %></p>
-        <p>Release Date: <%= show.ReleaseDate %></p>
-        <p>Seasons: <%= show.Seasons %></p>
-        <p>Episodes: <%= show.Episodes %></p>
-        <a href="/show/<%= show.CatalogID %>">View/Manage</a>
-        <br><br>
-    </article>
-<% }) %>
+    
+<section class="row g-3">
+    
+    <% shows.forEach(show => { %>
+        <article class="p-5 col-md-4">
+            <div class="bg-body-tertiary rounded p-3">
+                <h2><%= show.Title %></h2>
+                <p>Director: <%= show.Director %></p>
+                <p>Release Date: <%= show.ReleaseDate %></p>
+                <p>Seasons: <%= show.Seasons %></p>
+                <p>Episodes: <%= show.Episodes %></p>
+                <br><br>
+                <a href="/show/<%= show.CatalogID %>"><button type="button" class="btn btn-primary">View/Manage</button></a>
+            </div>
+        </article>
+    <% }) %>
+</section>

@@ -1,18 +1,27 @@
-<header>
-    <nav>
-        <h3>Group 27 Movie Library</h3>
+<div class="container">
 
-        <ul id="nav-links">
-            <li><a href='/'>Index</a></li>
-            <li><a href='/account'>Account</a></li>
-            <li><a href='/login'>Login</a></li>
-            <li><a href='/logout'>Logout</a></li>
-            <li><a href='/movies'>Movies</a></li>
-            <li><a href='/shows'>Shows</a></li>
-            <li><a href='/movies/add'>Add new Movie</a></li>
-            <li><a href='/shows/add'>Add new Show</a></li>
-            <li><a href='/actors'>Actors</a></li>
-            <li><a href='/genres'>Genres</a></li>
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+            <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+        </div>
+        
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/account" class="nav-link px-2 link-secondary">Account</a></li>
+            <li><a href="/movies" class="nav-link px-2">Movies</a></li>
+            <li><a href="/shows" class="nav-link px-2">Shows</a></li>
+            <li><a href="/actors" class="nav-link px-2">Actors</a></li>
+            <li><a href="/genres" class="nav-link px-2">Genres</a></li>
+            
+            <!-- <li><a href='/movies/add'>Add new Movie</a></li>
+            <li><a href='/shows/add'>Add new Show</a></li> -->
         </ul>
-    </nav>
-</header>
+        
+        <div class="col-md-3 text-end">
+            <a href="/login"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+            <a href="/logout"><button type="button" class="btn btn-primary">Logout</button></a>        
+        </div>
+    </header>
+
+</div>

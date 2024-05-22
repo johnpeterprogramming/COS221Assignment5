@@ -14,6 +14,8 @@ const expressLayouts = require('express-ejs-layouts');
 
 // Asset files are stored in the public folder
 app.use(express.static('public'));
+// Bootstrap
+app.use("/css", express.static("./node_modules/bootstrap/dist/css"));
 
 // Using express-ejs-layouts to create a layout for the app
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,10 +53,6 @@ app.use((req, res, next) => {
 
 
 // ROUTES
-
-app.get('/', (req, res) => {
-    res.render('index', {title: "Home"});
-});
 
 // MOVIE ROUTES
 //Trying to add filtering
