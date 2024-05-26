@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 // ROUTES
 
 // MOVIE ROUTES
-//Trying to add filtering
+//Added Filtering
 app.get('/movies', (req, res) => {
 
     //Extract query params
@@ -251,6 +251,7 @@ app.get('/logout', (req, res) => {
 //ADD FOR MANAGING OF ACTORS
 app.get('/actors', (req, res) => {
 
+    //to filter by actors first name
     const {FName} = req.query;
 
     db.getActors({FName}, (err, actors) => {
@@ -270,6 +271,7 @@ app.get('/actors/add', (req, res) => {
 
 // Route to handle adding a new actor
 app.post('/actors/add', (req, res) => {
+    // Extract the data from the form
     const { FName, LName, CatalogID } = req.body;
     db.addActor({ FName, LName, CatalogID }, (err, result) => {
         if (err) {
@@ -281,7 +283,9 @@ app.post('/actors/add', (req, res) => {
 
 // EDIT AN ACTOR
 app.get('/actors/edit/:id', (req, res) => {
+    // Get the actor ID from the URL
     const actorId = req.params.id;
+    // Get the actor from the database
     db.getActorById(actorId, (err, actor) => {
         if (err) {
             return res.status(500).send("An error occurred: " + err);
@@ -296,6 +300,7 @@ app.get('/actors/edit/:id', (req, res) => {
 // EDIT AN ACTOR POST
 app.post('/actors/edit/:id', (req, res) => {
     const actorId = req.params.id;
+    //
     const updatedActor = {
         FName: req.body.FName,
         LName: req.body.LName,
@@ -322,9 +327,9 @@ app.post('/actors/delete/:id', (req, res) => {
 
 //GENRES AND MANAGING OF GENRES
 app.get('/genres', (req, res) => {
-
+    // Extract the query parameters
     const {GenreID, Description} = req.query;
-
+    // Get the genres from the database
     db.getGenres({GenreID, Description}, (err, genres) => {
         if (err) {
             return res.status(500).send("An error occurred: " + err);
