@@ -3,8 +3,8 @@
     <a href="/genres/add"><button class="btn btn-secondary">Add New Genre</button></a>
 
     <form action="/genres" method="GET">
-        <label for="GenreID">Search by Genre ID:</label>
-        <input type="search" id="GenreID" name="GenreID">
+        <!-- <label for="GenreID">Search by Genre ID:</label>
+        <input type="search" id="GenreID" name="GenreID"> -->
 
         <label for="Description">Search by Description:</label>
         <input type="search" id="Description" name="Description">
@@ -19,8 +19,8 @@
     <% genres.forEach(genre => { %>
         <article class="p-5 col-md-4">
             <div class="bg-body-tertiary rounded p-3">
-                <h3>Genre ID: <%= genre.GenreID %></h3>
-                <p>Description: <%= genre.Description %></p>
+                <!-- <h3>Genre ID: <%= genre.GenreID %></h3> -->
+                <h3>Description: <%= genre.Description %></h3>
                 <p>Catalog ID: <%= genre.CatalogID %></p>
                 <a href="/genres/edit/<%= genre.GenreID %>"><button class="btn btn-primary">Edit</button></a>
                 <form action="/genres/delete/<%= genre.GenreID %>" method="post" style="display:inline;">
