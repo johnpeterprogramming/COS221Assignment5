@@ -34,39 +34,44 @@ class Database {
     updateUser(userid, email, password, callback) {
         this.connection.query("UPDATE user SET Email = ?, Password = ? WHERE UserID = ?", [email, password, userid], callback);
     }
+
+    //Get actors and also by searching first name
     getActors(searchParam, callback) {
         //this.connection.query("SELECT * from actors", callback);
-        
         let sql = "SELECT * FROM actors ";
         
         if (searchParam.FName) {
             sql += " WHERE FName LIKE '%" + searchParam.FName + "%'";
             
         }
-
+        //Limit response to 150
         sql += " LIMIT 150";
         this.connection.query(sql, callback);
     }
 
-    ///******************
+    // Get actor by ID
     getActorById(actorId, callback) {
         this.connection.query("SELECT * FROM actors WHERE ActorID = ?", [actorId], (err, results) => {
             if (err) {
                 return callback(err);
             }
+            // Return only the first result
             callback(null, results[0]);
         });
     }
+    //Add an actor
     addActor(actor, callback) {
         const sql = "INSERT INTO actors (FName, LName, CatalogID) VALUES (?, ?, ?)";
         this.connection.query(sql, [actor.FName, actor.LName, actor.CatalogID], callback);
     }
     
+    //Update an actor
     updateActor(actorId, actorData, callback) {
         const { FName, LName, CatalogID } = actorData;
         this.connection.query("UPDATE actors SET FName = ?, LName = ?, CatalogID = ? WHERE ActorID = ?", [FName, LName, CatalogID, actorId], callback);
     }
     
+    //Delete an actor
     deleteActor(actorId, callback) {
         this.connection.query("DELETE FROM actors WHERE ActorID = ?", [actorId], callback);
     }
@@ -77,14 +82,14 @@ class Database {
     getGenres(searchParam, callback) {
         //this.connection.query("SELECT * FROM genre", callback);
         let sql = "SELECT * FROM genre";
-
+        // Add filters if provided
         if(searchParam.GenreID){
             sql += " WHERE GenreID = " + searchParam.GenreID;
         }
         if(searchParam.Description){
             sql += " WHERE Description LIKE '%" + searchParam.Description + "%'";
         }
-
+        //Limit response to 200
         sql += " LIMIT 200";
         this.connection.query(sql, callback);
 
@@ -96,6 +101,7 @@ class Database {
             if (err) {
                 return callback(err);
             }
+            // Return only the first result
             callback(null, results[0]);
         });
     }
