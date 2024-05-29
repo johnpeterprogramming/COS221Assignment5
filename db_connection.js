@@ -127,7 +127,7 @@ class Database {
     //getMovies(CatalogID, callback)
     getMovies(filters, callback) {
         // let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, m.Duration, g.Description as Genre from movies as m, catalog as c, genre as g where m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID";
-        let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, m.Duration, g.Description as Genre FROM movies AS m, catalog AS c, genre AS g WHERE m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID";
+        let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, m.Duration, g.Description as Genre FROM movies AS m, catalog AS c, genre AS g WHERE m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID";
        
         // Add filters if provided
         if(filters.title){
@@ -154,7 +154,7 @@ class Database {
     }
     //getShows(CatalogID, callback)
     getShows(filters, callback) {
-        let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, s.Seasons, s.Episodes FROM shows as s, catalog as c WHERE s.CatalogID = c.CatalogID";
+        let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, s.Seasons, s.Episodes FROM shows as s, catalog as c WHERE s.CatalogID = c.CatalogID";
         
         // Add filters if provided
         if(filters.title){
