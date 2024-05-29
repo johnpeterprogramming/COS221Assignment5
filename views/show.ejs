@@ -1,6 +1,6 @@
 <h1>Manage Show</h1>
 
-<form action="/catalog/update/<%= show.CatalogID %>" method="post">
+<form action="/show/update/<%= show.CatalogID %>" method="post">
     <label for="">Title:</label>
     <input type="text" name="Title" id="Title" value="<%= show.Title %>">
     
@@ -9,6 +9,9 @@
 
     <label for="">ReleaseDate:</label>
     <input type="year" name="ReleaseDate" id="ReleaseDate">
+
+    <label for="Genre">Genre:</label>
+    <input type="text" id="Genre" name="Genre" class="mx-1" value="<%= show.Genre %>">
 
     <!-- NUM SEASONS AND EPISODES CANT' BE UPDATED YET --> 
     <label for="">Seasons:</label>
