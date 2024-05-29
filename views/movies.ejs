@@ -28,14 +28,26 @@
 <section class="row g-3">
 
     <% movies.forEach(movie => { %>
-        <article class="p-5 col-md-4">
+        <article class="p-7 col-md-2">
             <div class="bg-body-tertiary rounded p-3">
-                <h2><%= movie.Title %></h2>
-                <img src="<%= movie.PosterUrl%>" alt="">
-                <p>Director: <%= movie.Director %></p>
-                <p>Release Date: <%= movie.ReleaseDate %></p>
-                <p>Duration: <%= movie.Duration %></p>
-                <p>Genres: <%= movie.Genre %></p> 
+                <h5><%= movie.Title %></h5>
+                <div class="img-block">
+                    <img src="<%= movie.PosterUrl%>" alt="" class="img-prop">
+                </div>
+                <div class="description-block">
+                    <div class="description-heading">
+                        <p>Director:</p>
+                        <p>Release Date:</p>
+                        <p>Duration:</p>
+                        <p>Genre:</p>
+                    </div>
+                    <div class="description-details">
+                        <i><p><%= movie.Director %></p></i>
+                        <i><p><%= movie.ReleaseDate %></p></i>
+                        <i><p><%= movie.Duration %></p></i>
+                        <i><p><%= movie.Genre %></p></i>
+                    </div>
+                </div>
 
                 <br><br>
                 <a href="/movie/<%= movie.CatalogID %>"><button type="button" class="btn btn-primary">View/Manage</button></a>
@@ -43,3 +55,57 @@
         </article>
     <% }) %>
 </section>
+<style>
+    .description-details
+    {
+        text-align: left;
+        color: #cacaca;
+    }
+    .description-heading
+    {
+        text-align: right;
+        margin-right: 15px;
+        font-weight: bold;
+    }
+    .description-block
+    {
+        text-align: center;
+        display: flex;
+        color: white;
+    }
+    .img-block
+    {
+        width: 100%;
+        height: 290px;
+    }
+    h5
+    {
+        height: 30px;
+        width:100%;
+        font-size:2vh;
+        vertical-align: middle;
+    }
+    p
+    {
+        font-size: 10px;
+
+    }
+    .bg-body-tertiary
+    {
+        margin-top: 40px;
+        text-align: center;
+        transition: 0.3s;
+    }
+    .bg-body-tertiary:hover
+    {
+        box-shadow: rgb(0, 103, 255) 0 0 19px 7px;
+    }
+    .img-prop
+    {
+        width: 90%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>
