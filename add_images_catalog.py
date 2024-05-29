@@ -4,11 +4,11 @@ from time import sleep
 
 
 db = mysql.connector.connect(
-    host="localhost",
-    port=5000,
-    user="root",
-    password="Tsotets1",
-    database="prac_5"
+    host="",
+    port="",
+    user="",
+    password="",
+    database=""
 )
 
 cursor = db.cursor()
