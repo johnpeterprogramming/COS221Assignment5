@@ -18,7 +18,7 @@ cursor.execute("SELECT CatalogID, Title FROM catalog")
 entries = cursor.fetchall()
 
 
-api_key = "169dca51"
+api_key = ""
 api_url = "http://www.omdbapi.com/"
 
 
