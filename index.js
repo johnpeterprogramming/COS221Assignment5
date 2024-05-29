@@ -51,7 +51,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
 // ROUTES
 
 // MOVIE ROUTES
@@ -108,6 +107,8 @@ app.post('/movies/add', (req, res) => {
     });
 });
 app.get('/movie/:id', (req, res) => {
+    db.addView(req.params.id, req.session.user.UserID);
+
     const catalogID = req.params.id;
     db.getMovies({catalogID}, (err, movie) => {
         if (err || movie.length == 0) {
@@ -193,12 +194,14 @@ app.post('/shows/add', (req, res) => {
     });
 });
 app.get('/show/:id', (req, res) => {
+    db.addView(req.params.id, req.session.user.UserID);
     const catalogID = req.params.id;
     db.getShows({catalogID}, (err, show) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
+        } else {
+            res.render('show', {title: show[0].Title, show: show[0]});
         }
-        res.render('show', {title: show[0].Title, show: show[0]});
     });  
     
 });
