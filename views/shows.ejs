@@ -12,8 +12,11 @@
     <label for="seasons">Seasons:</label>
     <input type="text" id="seasons" name="seasons">
     
-   <label for="releaseDate">Release Date (Year):</label>
+    <label for="releaseDate">Release Date (Year):</label>
     <input type="number" id="releaseDate" name="releaseDate" class="mx-1">
+
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" class="mx-1">
     
     <button type="submit" class="btn btn-secondary">Apply Filters</button>
 </form>
@@ -29,6 +32,7 @@
                 <p>Release Date: <%= show.ReleaseDate %></p>
                 <p>Seasons: <%= show.Seasons %></p>
                 <p>Episodes: <%= show.Episodes %></p>
+                <p>Genres: <%= show.Genre %></p>
                 <br><br>
                 <a href="/show/<%= show.CatalogID %>"><button type="button" class="btn btn-primary">View/Manage</button></a>
             </div>
