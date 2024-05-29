@@ -131,19 +131,25 @@ app.post('/movie/delete/:id', (req, res) => {
     });
 });
 
-app.post('/catalog/update/:id', (req, res) => {
-    db.updateCatalog(req.params.id, req.body.Title, req.body.Director, req.body.ReleaseDate, (err, result) => {
+app.post('/movie/update/:id', (req, res) => {
+    db.updateMovie(req.params.id,req.body.Duration, (err, result) => {
         if (err) {
-            res.status(500).send("An error occurred: " + err);
+            res.status(500).send("An error occurred with movie update: " + err);
         } else {
-            console.log("Successful Catalog update!");
+            db.updateCatalog(req.params.id, req.body.Title, req.body.Director, req.body.ReleaseDate, req.body.Genre, (err, result) => {
+                if (err) {
+                    res.status(500).send("An error occurred with catalog update: " + err);
+                } else {
+                    console.log("Successful Movie update!");
+                }
+                
+            })
         }
-    
         // Redirects to the previous page
-        res.redirect(req.headers.referer || '/');
+        res.redirect(req.headers.referer || '/movies');
     });
+    
 });
-
 // SHOW ROUTES
 //TRYING TO ADD FILTERING
 app.get('/shows', (req, res) => {
@@ -209,6 +215,25 @@ app.post('/show/delete/:id', (req, res) => {
     });
 });
 
+app.post('/show/update/:id', (req, res) => {
+    db.updateShow(req.params.id, req.body.Seasons, req.body.Episodes, (err, result) => {
+        if (err) {
+            res.status(500).send("An error occurred with show update: " + err);
+        } else {
+            db.updateCatalog(req.params.id, req.body.Title, req.body.Director, req.body.ReleaseDate, req.body.Genre, (err, result) => {
+                if (err) {
+                    res.status(500).send("An error occurred with catalog update: " + err);
+                } else {
+                    console.log("Successful SHOW update!");
+                }
+                
+            })
+        }
+        // Redirects to the previous page
+        res.redirect(req.headers.referer || '/movies');
+    });
+    
+});
 
 // Account and User management
 app.get('/account', (req, res) => {

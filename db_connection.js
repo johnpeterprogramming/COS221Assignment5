@@ -178,8 +178,23 @@ class Database {
         this.connection.query(sql, callback);
     }
 
-    updateCatalog(CatalogID, Title, Director, ReleaseDate, callback) {
-        this.connection.query("UPDATE catalog SET Title = ?, Director = ?, ReleaseDate = ? WHERE CatalogID = ?", [Title, Director, ReleaseDate, CatalogID], callback);
+    updateMovie(CatalogID, Duration, callback) {
+        this.connection.query("UPDATE movies SET Duration = ? WHERE CatalogID = ?", [Duration, CatalogID], callback);
+    }
+
+    updateShow(CatalogID, Seasons, Episodes, callback) {
+        this.connection.query("UPDATE shows SET Seasons = ?, Episodes = ? WHERE CatalogID = ?", [Seasons, Episodes, CatalogID], callback);
+    }
+
+    updateCatalog(CatalogID, Title, Director, ReleaseDate, Genre, callback) {
+        this.connection.query("UPDATE catalog SET Title = ?, Director = ?, ReleaseDate = ? WHERE CatalogID = ?", [Title, Director, ReleaseDate, CatalogID], (err, res) => {
+            if (err) {
+                callback(err);
+            } else {
+                this.connection.query("UPDATE genre SET Description = ? WHERE CatalogID = ?", [Genre, CatalogID], callback);
+            }
+        });
+        
     }
 
     deleteMovieOrShow(CatalogID, callback) {
