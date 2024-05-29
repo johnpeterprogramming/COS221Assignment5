@@ -114,7 +114,15 @@ app.get('/movie/:id', (req, res) => {
         if (err || movie.length == 0) {
             res.status(500).send("An error occurred: " + err);
         } else {
-            res.render('movie', {title: movie[0].Title, movie: movie[0]});
+            db.getActorsByCatalogID(catalogID, (err, actors) => {
+                if (err) {
+                    res.status(500).send("An error occurred: " + err);
+                } else {
+                    // movie[0].Actors = actors;
+                    res.render('movie', {title: movie[0].Title, movie: movie[0], actors: actors});
+                }
+            });
+            // res.render('movie', {title: movie[0].Title, movie: movie[0]});
         }
     });  
     
@@ -200,7 +208,14 @@ app.get('/show/:id', (req, res) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
         } else {
-            res.render('show', {title: show[0].Title, show: show[0]});
+            db.getActorsByCatalogID(catalogID, (err, actors) => {
+                if (err) {
+                    res.status(500).send("An error occurred: " + err);
+                } else {
+                    // show[0].Actors = actors;
+                    res.render('show', {title: show[0].Title, show: show[0], actors: actors});
+                }
+            });
         }
     });  
     
