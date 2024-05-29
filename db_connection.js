@@ -146,15 +146,15 @@ class Database {
             // Assuming releaseDate is in YYYY-MM-DD format
             sql += " AND c.ReleaseDate = '" + filters.releaseDate + "'";
         }
+        if (filters.catalogID)
+            sql += " AND c.CatalogID = " + filters.catalogID;
     
         this.connection.query(sql, callback);
-        // if (CatalogID)
-        //     sql += " AND c.CatalogID = " + CatalogID;
         // this.connection.query(sql, callback);
     }
     //getShows(CatalogID, callback)
     getShows(filters, callback) {
-        let sql = "SELECT DISTINCT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, s.Seasons, s.Episodes FROM shows as s, catalog as c WHERE s.CatalogID = c.CatalogID AND c.PosterUrl IS NOT NULL";
+        let sql = "SELECT DISTINCT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, s.Seasons, s.Episodes, g.Description as Genre FROM shows as s, catalog as c, genre as g WHERE s.CatalogID = c.CatalogID AND g.CatalogID = c.CatalogID AND c.PosterUrl IS NOT NULL";
         
         // Add filters if provided
         if(filters.title){
@@ -169,8 +169,12 @@ class Database {
         if(filters.releaseDate){
             sql += " AND c.ReleaseDate = '" + filters.releaseDate + "'";
         }
-        // if (CatalogID)
-        //     sql += " AND c.CatalogID = " + CatalogID;
+        if(filters.genre){
+            sql += " AND g.Description LIKE '%" + filters.genre + "%'";
+        }
+        if (filters.catalogID)
+            sql += " AND c.CatalogID = " + filters.catalogID;
+
         this.connection.query(sql, callback);
     }
 

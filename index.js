@@ -108,7 +108,8 @@ app.post('/movies/add', (req, res) => {
     });
 });
 app.get('/movie/:id', (req, res) => {
-    db.getMovies(req.params.id, (err, movie) => {
+    const catalogID = req.params.id;
+    db.getMovies({catalogID}, (err, movie) => {
         if (err || movie.length == 0) {
             res.status(500).send("An error occurred: " + err);
         } else {
@@ -147,9 +148,9 @@ app.post('/catalog/update/:id', (req, res) => {
 //TRYING TO ADD FILTERING
 app.get('/shows', (req, res) => {
 
-    const {title, director, seasons, releaseDate} = req.query;
+    const {title, director, seasons, releaseDate, genre} = req.query;
 
-    db.getShows({title, director, seasons, releaseDate}, (err, shows) => {
+    db.getShows({title, director, seasons, releaseDate, genre}, (err, shows) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
         }
@@ -186,7 +187,8 @@ app.post('/shows/add', (req, res) => {
     });
 });
 app.get('/show/:id', (req, res) => {
-    db.getShows(req.params.id, (err, show) => {
+    const catalogID = req.params.id;
+    db.getShows({catalogID}, (err, show) => {
         if (err) {
             res.status(500).send("An error occurred: " + err);
         }
