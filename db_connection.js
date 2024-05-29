@@ -123,11 +123,13 @@ class Database {
         this.connection.query("DELETE FROM genre WHERE GenreID = ?", [genreId], callback);
     }
 
+    getViewsByCatalogID(CatalogID, callback) {
+        this.connection.query("SELECT COUNT(*) as Views FROM user_views WHERE CatalogID = ?", [CatalogID], callback);
+    }
 
     //getMovies(CatalogID, callback)
     getMovies(filters, callback) {
-        // let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, m.Duration, g.Description as Genre from movies as m, catalog as c, genre as g where m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID";
-        let sql = "SELECT DISTINCT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, m.Duration, g.Description as Genre FROM movies AS m, catalog AS c, genre AS g WHERE m.CatalogID = c.CatalogID AND c.CatalogID = g.CatalogID AND c.PosterUrl IS NOT NULL";
+        let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, m.Duration, g.Description as Genre, uv.Views FROM catalog AS c JOIN movies AS m ON m.CatalogID = c.CatalogID JOIN genre AS g ON c.CatalogID = g.CatalogID LEFT JOIN (SELECT CatalogID, COUNT(*) as Views FROM user_views GROUP BY CatalogID) AS uv ON uv.CatalogID = c.CatalogID WHERE c.PosterUrl IS NOT NULL"
        
         // Add filters if provided
         if(filters.title){
@@ -148,14 +150,16 @@ class Database {
         }
         if (filters.catalogID)
             sql += " AND c.CatalogID = " + filters.catalogID;
+
+        sql += " ORDER BY uv.Views DESC"
     
         this.connection.query(sql, callback);
         // this.connection.query(sql, callback);
     }
     //getShows(CatalogID, callback)
     getShows(filters, callback) {
-        let sql = "SELECT DISTINCT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, s.Seasons, s.Episodes, g.Description as Genre FROM shows as s, catalog as c, genre as g WHERE s.CatalogID = c.CatalogID AND g.CatalogID = c.CatalogID AND c.PosterUrl IS NOT NULL";
-        
+        let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, s.Seasons, s.Episodes, g.Description as Genre, COALESCE(uv.Views, 0) as Views FROM catalog AS c JOIN shows AS s ON s.CatalogID = c.CatalogID JOIN genre AS g ON c.CatalogID = g.CatalogID LEFT JOIN (SELECT CatalogID, COUNT(*) as Views FROM user_views GROUP BY CatalogID) AS uv ON uv.CatalogID = c.CatalogID WHERE c.PosterUrl IS NOT NULL";        
+
         // Add filters if provided
         if(filters.title){
             sql += " AND c.Title LIKE '%" + filters.title + "%'";
@@ -174,6 +178,8 @@ class Database {
         }
         if (filters.catalogID)
             sql += " AND c.CatalogID = " + filters.catalogID;
+
+        sql += " ORDER BY Views DESC";
 
         this.connection.query(sql, callback);
     }
@@ -239,6 +245,9 @@ class Database {
     }
     addShow(CatalogID, Seasons, Episodes, callback) {
         this.connection.query("INSERT INTO shows (CatalogID, Seasons, Episodes) VALUES (?, ?, ?)", [CatalogID, Seasons, Episodes], callback);
+    }
+    addView(CatalogID, UserID, callback) {
+        this.connection.query("INSERT INTO user_views (CatalogID, UserID) VALUES (?, ?)", [CatalogID, UserID], callback);
     }
 }
 

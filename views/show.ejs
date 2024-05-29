@@ -3,6 +3,8 @@
 <form action="/show/update/<%= show.CatalogID %>" method="post">
     <label for="">Title:</label>
     <input type="text" name="Title" id="Title" value="<%= show.Title %>">
+
+    <p><span class="fw-b">Views:</span> <%= show.Views %></p>
     
     <label for="">Director:</label>
     <input type="text" name="Director" id="Director" value="<%= show.Director %>">
@@ -19,6 +21,8 @@
 
     <label for="">Episodes:</label>
     <input type="text" name="Episodes" id="Episodes" value="<%= show.Episodes %>">
+
+
     
     <input type="submit" value="Update Details">
 </form>
