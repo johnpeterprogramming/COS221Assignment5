@@ -1,39 +1,3 @@
-<<<<<<< Updated upstream
-<h1>Manage Movie</h1>
-
-<form action="/movie/update/<%= movie.CatalogID %>" method="post">
-    <label for="">Title:</label>
-    <input type="text" name="Title" id="Title" value="<%= movie.Title %>">
-    
-    <p><span class="fw-b">Views:</span> <%= movie.Views %></p>
-
-    <label for="">Director:</label>
-    <input type="text" name="Director" id="Director" value="<%= movie.Director %>">
-
-    <label for="">ReleaseDate:</label>
-    <input type="year" name="ReleaseDate" id="ReleaseDate">
-
-    <!-- GENRE CAN'T BE UPDATED YET -->
-    <label for="">Genre:</label>
-    <input type="text" name="Genre" id="Genre" value="<%= movie.Genre %>">
-
-    <label for="">Duration:</label>
-    <input type="text" name="Duration" id="Duration" value="<%= movie.Duration %>">
-    
-    <input type="submit" value="Update Details">
-</form>
-
-<div>
-    <h2>Actors:</h2>
-    <% actors.forEach(actor => { %>
-        <p><%= actor.FName %> <%= actor.LName %></p>
-    <% }) %>
-</div>
-
-<form action="/movie/delete/<%= movie.CatalogID %>" method="post">
-    <input type="submit" value="DELETE" class="btn btn-danger">
-</form>
-=======
 <h3>Manage Movie</h3>
 <div class="movie-block">
     <div class="pic-block">
@@ -50,7 +14,7 @@
                 <p>Views:</p>
             </div>
             <div class="update-block">
-                <form action="/catalog/update/<%= movie.CatalogID %>" method="post">
+                <form action="/movie/update/<%= movie.CatalogID %>" method="post">
                     <input type="text" name="Title" id="Title" value="<%= movie.Title %>"><br>
                     <input type="text" name="Director" id="Director" value="<%= movie.Director %>"><br>
                     <input type="year" name="ReleaseDate" id="ReleaseDate"><br>
@@ -74,7 +38,6 @@
     </div>
 </div>
 
->>>>>>> Stashed changes
 
 <% if (actors.length > 0) { %>
     <h3 class="mt-5">Actors:</h2>
@@ -86,6 +49,7 @@
         </div>
     </div>
 <% } %>
+
 <script>
     let release_date = "<%= movie.ReleaseDate %>";
 
