@@ -1,34 +1,55 @@
-<h1>Manage Show</h1>
+<h3>Manage Show</h3>
+<div class="movie-block">
+    <div class="pic-block">
+        <img src="<%=show.PosterUrl%>">
+    </div>
+    <div class="form-block-outer">
+        <div class="form-block-inner">
+            <div class="heading-block">
+                <p>Title:</p>
+                <p>Director:</p>
+                <p>ReleaseDate:</p>
+                <p>Genre:</p>
+                <p>Seasons:</p>
+                <p>Episodes:</p>
+                <p>Views:</p>
+            </div>
+            <div class="update-block">
+                <form action="/show/update/<%= show.CatalogID %>" method="post">
+                    <input type="text" name="Title" id="Title" value="<%= show.Title %>"><br>
+                    <input type="text" name="Director" id="Director" value="<%= show.Director %>"><br>
+                    <input type="year" name="ReleaseDate" id="ReleaseDate"><br>
+                    <input type="text" name="Genre" id="Genre" value="<%= show.Genre %>"><br>
+                    <input type="text" name="Seasons" id="Seasons" value="<%= show.Seasons %>"><br>
+                    <input type="text" name="Episodes" id="Episodes" value="<%= show.Episodes %>"><br>
+                    <input type="text" name="views" id="views" value="<%= show.Views %>" disabled>
+                    <input type="submit" value="Update Details" id="updatebtn">
+                </form>
+            </div>
+        </div>
+        <div class="delete-block">
+            <div class="delete-text">
+                <p>Delete:</p>
+            </div>
+            <div class="delete-btn">
+                <form action="/show/delete/<%= show.CatalogID %>" method="post">
+                    <input type="submit" value="DELETE" class="btn btn-danger">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-<form action="/show/update/<%= show.CatalogID %>" method="post">
-    <label for="">Title:</label>
-    <input type="text" name="Title" id="Title" value="<%= show.Title %>">
-
-    <p><span class="fw-b">Views:</span> <%= show.Views %></p>
-    
-    <label for="">Director:</label>
-    <input type="text" name="Director" id="Director" value="<%= show.Director %>">
-
-    <label for="">ReleaseDate:</label>
-    <input type="year" name="ReleaseDate" id="ReleaseDate">
-
-    <label for="Genre">Genre:</label>
-    <input type="text" id="Genre" name="Genre" class="mx-1" value="<%= show.Genre %>">
-
-    <!-- NUM SEASONS AND EPISODES CANT' BE UPDATED YET --> 
-    <label for="">Seasons:</label>
-    <input type="text" name="Seasons" id="Seasons" value="<%= show.Seasons %>">
-
-    <label for="">Episodes:</label>
-    <input type="text" name="Episodes" id="Episodes" value="<%= show.Episodes %>">
-
-
-    
-    <input type="submit" value="Update Details">
-</form>
-<form action="/show/delete/<%= show.CatalogID %>" method="post">
-    <input type="submit" value="DELETE" class="btn btn-danger">
-</form>
+<% if (actors.length > 0) { %>
+    <h3 class="mt-5">Actors:</h2>
+    <div class="movie-block">
+        <div>
+            <% actors.forEach(actor => { %>
+                <p><%= actor.FName %> <%= actor.LName %></p>
+            <% }) %>
+        </div>
+    </div>
+<% } %>
 
 <script>
     let release_date = "<%= show.ReleaseDate %>";
@@ -37,3 +58,50 @@
     let date = new Date(release_date);
     document.getElementById("ReleaseDate").value = date.getFullYear();
 </script>
+
+<style>
+    .delete-btn
+    {
+        margin-left: 24%;
+    }
+    .delete-block
+    {
+        display: flex;
+        margin-top: 1%;
+        margin-left: 10%;
+    }
+    img
+    {
+        width: 100%;
+        height: auto;
+    }
+    #updatebtn
+    {
+        background-color: #00df02;
+        border: #02cb04 solid 1px;
+        margin-right: 8%;
+    }
+    h3
+    {
+        text-align: center;
+    }
+    .update-block>form>input
+    {
+        margin-bottom: 11px;
+        margin-left: 10%;
+    }
+    .form-block-inner
+    {
+        display: flex;
+        margin-left: 10%;
+        margin-bottom: auto;
+        margin-top: 7%;
+    }
+    .movie-block
+    {
+        display: flex;
+        margin-left: 25%;
+        margin-right: auto;
+        margin-top: 5%;
+    }
+</style>

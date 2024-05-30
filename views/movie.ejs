@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <h1>Manage Movie</h1>
 
 <form action="/movie/update/<%= movie.CatalogID %>" method="post">
@@ -24,7 +25,59 @@
 <form action="/movie/delete/<%= movie.CatalogID %>" method="post">
     <input type="submit" value="DELETE" class="btn btn-danger">
 </form>
+=======
+<h3>Manage Movie</h3>
+<div class="movie-block">
+    <div class="pic-block">
+        <img src="<%=movie.PosterUrl%>">
+    </div>
+    <div class="form-block-outer">
+        <div class="form-block-inner">
+            <div class="heading-block">
+                <p>Title:</p>
+                <p>Director:</p>
+                <p>ReleaseDate:</p>
+                <p>Genre:</p>
+                <p>Duration:</p>
+                <p>Views:</p>
+            </div>
+            <div class="update-block">
+                <form action="/catalog/update/<%= movie.CatalogID %>" method="post">
+                    <input type="text" name="Title" id="Title" value="<%= movie.Title %>"><br>
+                    <input type="text" name="Director" id="Director" value="<%= movie.Director %>"><br>
+                    <input type="year" name="ReleaseDate" id="ReleaseDate"><br>
+                    <input type="text" name="Genre" id="Genre" value="<%= movie.Genre %>"><br>
+                    <input type="text" name="Duration" id="Duration" value="<%= movie.Duration %>"><br>
+                    <input type="text" name="views" id="views" value="<%= movie.Views %>" disabled>
+                    <input type="submit" value="Update Details" id="updatebtn">
+                </form>
+            </div>
+        </div>
+        <div class="delete-block">
+            <div class="delete-text">
+                <p>Delete:</p>
+            </div>
+            <div class="delete-btn">
+                <form action="/movie/delete/<%= movie.CatalogID %>" method="post">
+                    <input type="submit" value="DELETE" class="btn btn-danger">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+>>>>>>> Stashed changes
+
+<% if (actors.length > 0) { %>
+    <h3 class="mt-5">Actors:</h2>
+    <div class="movie-block">
+        <div>
+            <% actors.forEach(actor => { %>
+                <p><%= actor.FName %> <%= actor.LName %></p>
+            <% }) %>
+        </div>
+    </div>
+<% } %>
 <script>
     let release_date = "<%= movie.ReleaseDate %>";
 
@@ -32,3 +85,49 @@
     let date = new Date(release_date);
     document.getElementById("ReleaseDate").value = date.getFullYear();
 </script>
+<style>
+    .delete-btn
+    {
+        margin-left: 24%;
+    }
+    .delete-block
+    {
+        display: flex;
+        margin-top: 1%;
+        margin-left: 10%;
+    }
+    img
+    {
+        width: 100%;
+        height: auto;
+    }
+    #updatebtn
+    {
+        background-color: #00df02;
+        border: #02cb04 solid 1px;
+        margin-right: 8%;
+    }
+    h3
+    {
+        text-align: center;
+    }
+    .update-block>form>input
+    {
+        margin-bottom: 11px;
+        margin-left: 10%;
+    }
+    .form-block-inner
+    {
+        display: flex;
+        margin-left: 10%;
+        margin-bottom: auto;
+        margin-top: 7%;
+    }
+    .movie-block
+    {
+        display: flex;
+        margin-left: 25%;
+        margin-right: auto;
+        margin-top: 5%;
+    }
+</style>

@@ -50,12 +50,18 @@
                 </div>
 
                 <br><br>
-                <a href="/movie/<%= movie.CatalogID %>"><button type="button" class="btn btn-primary">View/Manage</button></a>
+                <a href="/movie/<%= movie.CatalogID %>"><button type="button" class="btn btn-primary">View</button></a>
             </div>
         </article>
     <% }) %>
 </section>
 <style>
+    .btn.btn-primary1
+    {
+        background-color: rgba(0, 124, 255, 0.8);
+        border: 1px solid #3088e6;
+        width: 40%;
+    }
     .description-details
     {
         text-align: left;

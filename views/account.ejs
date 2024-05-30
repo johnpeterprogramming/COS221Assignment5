@@ -1,25 +1,28 @@
 
-<div class="container py-4">
-    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+<div class="container py-3">
+    <div class="p-2 mb-4 bg-body-tertiary rounded-3">
 
-        <h1>User account Details</h1>
-
-        <label>Account Holder: </label>
-        <p class="fw-bold"><%= user.AccountHolder %></p>
-        <label>Account ID: </label>
-        <p class="fw-bold"><%= user.AccountID %></p>
-        <label>Account Number: </label>
-        <p class="fw-bold"><%= user.AccountNumber %></p>
-        <label>Account CVV: </label>
-        <p class="fw-bold"><%= user.CVV %></p>
-        <label>Account Subscription Type: </label>
-        <p class="fw-bold"><%= user.SubscriptionType %></p>
-        <label>Account Start Date: </label>
-        <p class="fw-bold"><%= user.SubscriptionStartDate %></p>
-        <label>Account End Date: </label>
-        <p class="fw-bold"><%= user.SubscriptionEndDate %></p>
-
-
+        <h5>User account details</h5>
+        <div class="description-block">
+            <div class="description-heading">
+                <p>Account Holder: </p>
+                <!-- <p>Account ID: </p> -->
+                <p>Account Number: </p>
+                <p>Account CVV: </p>
+                <p>Account Subscription Type: </p>
+                <p>Account Start Date: </p>
+                <p>Account End Date: </p>
+            </div>
+            <div class="description-details">
+                <p><%= user.AccountHolder %></p>
+                <p><%= user.AccountID %></p>
+                <p><%= user.AccountNumber %></p>
+                <p><%= user.CVV %></p>
+                <p><%= user.SubscriptionType %></p>
+                <p><%= user.SubscriptionStartDate %></p>
+                <p><%= user.SubscriptionEndDate %></p>
+            </div>
+        </div>
         <form action="" method="post" class="mt-5">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
@@ -29,8 +32,129 @@
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="<%= user.Password %>">
             </div>
-            <button type="submit" class="btn btn-primary my-2">Update Details</button>
+            <button type="submit" class="button-85">Update Details</button>
         </form>
-
     </div>
 </div>
+<style>
+
+    .button-85
+    {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        margin-left: 32.5%;
+        padding: 0.6em 2em;
+        border: none;
+        outline: none;
+        color: rgb(255, 255, 255);
+        background: #111;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+    .button-85:before
+    {
+        content: "";
+        background: linear-gradient(45deg,
+        #ff0000,
+        #ff7300,
+        #fffb00,
+        #48ff00,
+        #00ffd5,
+        #002bff,
+        #7a00ff,
+        #ff00c8,
+        #ff0000);
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing-button-85 20s linear infinite;
+        transition: opacity 0.3s ease-in-out;
+        border-radius: 10px;
+    }
+
+    @keyframes glowing-button-85 {
+        0% {
+            background-position: 0 0;
+        }
+        50% {
+            background-position: 400% 0;
+        }
+        100% {
+            background-position: 0 0;
+        }
+    }
+
+    .button-85:after {
+        z-index: -1;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #222;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+
+
+    #password
+    {
+        cursor: pointer;
+    }
+    .btn.btn-primary.my-2
+    {
+        margin-right: auto;
+        margin-left: 37.5%;
+    }
+    .p-2.mb-4.bg-body-tertiary.rounded-3
+    {
+        width: 35vw;
+        margin-top: 10px;
+        margin-bottom:40px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .description-details
+    {
+        text-align: left;
+        color: #cacaca;
+        margin-right: auto;
+    }
+    .description-heading
+    {
+        text-align: right;
+        margin-right: 15px;
+        font-weight: bold;
+        margin-left: auto;
+    }
+    .description-block
+    {
+        text-align: center;
+        display: flex;
+        color: white;
+        margin: auto;
+    }
+    p:hover
+    {
+        cursor: default;
+    }
+    h5
+    {
+        cursor: default;
+        text-align: center;
+        text-decoration: underline;
+        margin-bottom: 5%;
+    }
+</style>
