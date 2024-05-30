@@ -24,18 +24,94 @@
 <section class="row g-3">
     
     <% shows.forEach(show => { %>
-        <article class="p-5 col-md-4">
+        <article class="p-7 col-md-2">
             <div class="bg-body-tertiary rounded p-3">
-                <h2><%= show.Title %></h2>
-                <img src="<%= show.PosterUrl %>" alt="">
-                <p>Director: <%= show.Director %></p>
-                <p>Release Date: <%= show.ReleaseDate %></p>
-                <p>Seasons: <%= show.Seasons %></p>
-                <p>Episodes: <%= show.Episodes %></p>
-                <p>Genres: <%= show.Genre %></p>
+                <h5><%= show.Title %></h5>
+                <div class="img-block">
+                <img src="<%= show.PosterUrl %>" alt="" class="img-prop">
+                </div>
+                <div class="description-block">
+                    <div class="description-heading">
+                        <p>Director:</p>
+                        <p>Release Date:</p>
+                        <p>Seasons</p>
+                        <p>Episodes:</p>
+                        <p>Genre:</p>
+                    </div>
+                    <div class="description-details">
+                <p><%= show.Director %></p>
+                <p><%= show.ReleaseDate %></p>
+                <p><%= show.Seasons %></p>
+                <p><%= show.Episodes %></p>
+                <p><%= show.Genre %></p>
                 <br><br>
-                <a href="/show/<%= show.CatalogID %>"><button type="button" class="btn btn-primary">View/Manage</button></a>
+                    </div>
+                </div>
+                <a href="/show/<%= show.CatalogID %>"><button type="button" class="btn btn-primary1">View</button></a>
             </div>
         </article>
     <% }) %>
 </section>
+<style>
+    .btn.btn-primary1
+    {
+        background-color: #d50000;
+        border: 1px solid #c50202;
+        width: 40%;
+    }
+    {
+
+    }
+    .description-details
+    {
+        text-align: left;
+        color: #cacaca;
+    }
+    .description-heading
+    {
+        text-align: right;
+        margin-right: 15px;
+        font-weight: bold;
+    }
+    .description-block
+    {
+        text-align: center;
+        display: flex;
+        color: white;
+    }
+    .img-block
+    {
+        width: 100%;
+        height: 290px;
+    }
+    h5
+    {
+        height: 30px;
+        width:100%;
+        font-size:2vh;
+        vertical-align: middle;
+    }
+    p
+    {
+        font-size: 10px;
+
+    }
+    .bg-body-tertiary
+    {
+        margin-top: 40px;
+        text-align: center;
+        transition: 0.3s;
+    }
+    .bg-body-tertiary:hover
+    {
+        box-shadow: rgb(255, 0, 0) 0 0 19px 7px;
+    }
+    .img-prop
+    {
+        width: 90%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+</style>
