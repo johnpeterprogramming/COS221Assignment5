@@ -51,6 +51,15 @@
     </div>
 <% } %>
 
+<div>
+    <% if (actors.length > 0) { %>
+        <h2>Actors:</h2>
+        <% actors.forEach(actor => { %>
+            <p><%= actor.FName %> <%= actor.LName %></p>
+        <% }) %>
+    <% } %>
+</div>
+
 <script>
     let release_date = "<%= show.ReleaseDate %>";
 

@@ -127,6 +127,10 @@ class Database {
         this.connection.query("SELECT COUNT(*) as Views FROM user_views WHERE CatalogID = ?", [CatalogID], callback);
     }
 
+    getActorsByCatalogID(CatalogID, callback) {
+        this.connection.query("SELECT a.ActorID, a.FName, a.LName FROM `actors` as a, catalog as c WHERE a.CatalogID=c.CatalogID AND c.CatalogID=?", [CatalogID], callback);
+    }
+
     //getMovies(CatalogID, callback)
     getMovies(filters, callback) {
         let sql = "SELECT c.CatalogID, c.Title, c.Director, c.ReleaseDate, c.PosterUrl, m.Duration, g.Description as Genre, uv.Views FROM catalog AS c JOIN movies AS m ON m.CatalogID = c.CatalogID JOIN genre AS g ON c.CatalogID = g.CatalogID LEFT JOIN (SELECT CatalogID, COUNT(*) as Views FROM user_views GROUP BY CatalogID) AS uv ON uv.CatalogID = c.CatalogID WHERE c.PosterUrl IS NOT NULL"
